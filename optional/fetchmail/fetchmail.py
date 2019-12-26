@@ -5,6 +5,7 @@ import os
 import tempfile
 import shlex
 import subprocess
+import sys
 import re
 import requests
 
@@ -90,5 +91,8 @@ def run(debug):
 if __name__ == "__main__":
     while True:
         time.sleep(int(os.environ.get("FETCHMAIL_DELAY", 60)))
-        run(os.environ.get("DEBUG", None) == "True")
 
+        try:
+            run(os.environ.get("DEBUG", None) == "True")
+        except Exception:
+            sys.excepthook(*sys.exc_info())
